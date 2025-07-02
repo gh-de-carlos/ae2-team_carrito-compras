@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="es-CL">
+
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="grupo 1">
+    <meta name="project" content="modulo xx - aexx_abpro - nombre">
+    <meta name="description" content="Actividad grupal evaluada del bootcamp Full Stack Javascript con Skillnest: xx - qué hace.">
+    <meta name="keywords" content="bootstrap css, Recitronic">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
+    <link rel="stylesheet" href="./assets/css/style.css">
+    <link rel="shortcut icon" href="favicon.svg" type="image/svg">
+    <link rel="stylesheet" href="./assets/css/style.css">
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js" integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q" crossorigin="anonymous" defer></script>
+    <script src="./assets/js/main.js"></script>
+    
+    <title>Carrito de compras</title>
+  </head>
+
+  <body>
+    <hgroup>
+      <h1>Contexto</h1>
+      <p>Un supermercado quiere implementar un sistema básico en JavaScript que registre las compras de los clientes en una terminal de autoservicio. El sistema debe almacenar información del cliente y los productos que va añadiendo al carrito, calcular el total, aplicar descuentos si se superan ciertos montos, y validar condiciones como carritos vacíos o valores inválidos. El objetivo es que el equipo diseñe la lógica utilizando variables correctamente y domine los operadores, tipos de datos y control de flujo</p>
+    </hgroup>
+    <h1>Actividad</h1>
+    <pre>
+Trabajen en equipo para desarrollar una solución en JavaScript que cubra los siguientes aspectos:
+
+Declaren variables para:
+  - Nombre del cliente.
+  - Lista de productos (usar un arreglo de objetos con nombre, cantidad y precio).
+  - Total de compra.
+  - Descuento aplicado (si corresponde).
+
+Apliquen nombres significativos a todas las variables del sistema.
+Utilicen constantes para definir límites como monto mínimo para aplicar descuento o máximo de productos permitidos.
+Manipulen tipos simples (string, number, boolean) y complejos (arreglos y objetos) según corresponda.
+Controlen el scope de las variables según el diseño modular del programa (funciones).
+Usen operadores aritméticos para calcular subtotales y totales.
+Consideren la precedencia de operadores al aplicar fórmulas (como descuento o impuestos).
+
+Usen operadores de comparación y lógicos para validar:
+  - CASO A. Si el carrito está vacío.
+  - CASO B. Si el monto total supera un cierto límite.
+  - CASO C. Si algún precio o cantidad ingresada es inválida.
+
+Se implementan porque se han sugerido en la lógica de negocio:
+  - Indicar si ha recibido descuento.
+  - Si la cantidad de productos en el carro supera máximo.
+
+Simulen acciones del cliente como añadir productos, quitar productos y finalizar compra.
+Usen if y else para mostrar diferentes mensajes según el total (por ejemplo: “gracias por tu compra”, “tu carrito está vacío”, “aplicaste un descuento”).
+Implementen un diagrama de flujo simple que explique la lógica principal del sistema y represente visualmente cómo se toman decisiones.
+
+Prueben diferentes condiciones de borde:
+  - 1.Producto con cantidad 0. CASO C
+  - 2.Total de compra en 0. Tanto 1 como 3 provocan este. 
+  - 3.Lista de productos vacía. CASO A
+  - Precio negativo. CASO C
+
+Al final, el equipo debe presentar su solución y explicar brevemente cómo resolvieron los siguientes puntos:
+
+¿Cómo evitaron errores por mal uso de variables?
+¿Qué beneficios vieron en el uso de objetos para representar productos?
+¿Cómo manejaron una lógica clara y eficiente con if/else?
+¿Qué condiciones de borde encontraron más retadoras?
+    </pre>
+
+  </body>
+
+</html>
