@@ -1,3 +1,79 @@
+"use strict"
+/* =====================================
+=          CARRITO DE COMPRA           =
+===================================== */
+
+/**
+ * @author GRUPO 1 (the real one)
+ * Natalia Devia
+ * Sebastián Gallegos
+ * Hernán Barrales
+ * Jorge Rodríguez
+ * Carlos Pizarro 
+ */
+
+/* =====================================
+=              CONTEXTO                =
+===================================== */
+// El siguiente código simula acciones relacionadas a un
+// carrito de compras. Se agregan productos en cantidades
+// relativamente aleatorias, se quitan productos del carro
+// y finalmente se evalúan una serie de condiciones borde
+// mostrando mensajes al usuario, para terminar mostrando
+// el costo total de la compra y el descuento aplicado si
+// corresponde según las reglas de negocio definidas.
+
+/* =====================================
+=              OBJETIVOS               =
+===================================== */
+// - Practicar declaración de variables con const y let
+// - Aplicar buenas prácticas de nombrado en las variables
+// - Usar if para modificar el control de flujo del programa
+// - Manipular tipos simples y complejos según se requiera
+// - Controlar el scope de las variables usando funciones(1)
+// - Usar operaradores ariméticos aplicando precedencia.
+
+/* =====================================
+=            REQUERIMIENTOS            =
+===================================== */
+// DECLARE VARIABLES PARA 
+// 1. Nombre del cliente
+// 2. Un carrito de productos (arreglo de objetos)
+// 2.1 Cada objeto debe tener nombre/cantidad/precio
+// 3. Total de la compra
+// 4. Descuento aplicado
+
+// OTRAS VARIABLES RELEVANTES IMPLÍCITAS EN EL ENUNCIADO
+// 1. const para umbral de descuento (10000)
+// 2. const para máximo de productos en carrito (10)
+// 3. const para la tasa de descuento (10)
+// 4. const para subtotal
+
+// USO DE IF [ELSE] PARA
+// 2. Controle caso borde: carrito está vacío
+// 3. Controle caso borde: monto supera límite (descuento)
+// 4. Controle caso borde: precios < 1 o cantidad inválida
+
+// MENSAJES AL USUARIO
+// 0. Saludar al usuario
+// 1. Se ha agregado producto
+// 2. Se ha quitado producto
+// 3. Productos no cumplen condiciones (precio/cantidad)
+// 4. Es elegible para obtener un descuento de ${dRate}
+// 5. Carrito está vacío.
+// 6. Despedida del usuario.
+
+// OTRAS
+// 1. Simule: agregar/quitar productos y terminar compra.
+// 2. Aplique nombres significativos a las variables.
+// 3. Implemente diagrama de flujo simple ilustrando la
+//>> lógica del programa y represente la toma de decisiones.
+// 4. Presentar solución y explicar los siguientes puntos:
+// 4.1 ¿Cómo evitaron errores en el uso de variables? 
+// 4.2 ¿Qué beneficios se obtuvo del uso de objetos?
+// 4.3 ¿Cómo manejaron una lógica clara y eficiente if/else? 
+// 4.4 ¿Qué condiciones de borde fueron más desafiantes? 
+
 console.log('Comenzando rutina del carrito de compra');
 
 // para trabajar con valores hardcodeados y simular situaciones
@@ -32,6 +108,7 @@ do {
   console.log(`Se ha(n) agregado ${q} ${p.nombre}`)
   
   // quitar o no el producto
+  // if (yOrN()) quitarProducto();
   yOrN() ? quitarProducto() : 0;
 
   // en la condición se pregunta si terminar la compra o no
@@ -53,7 +130,7 @@ do {
       console.log(`El producto ${p.nombre} tiene precio ${p.precio}. Será eliminado`);
     if (p.cantidad === 0)
       console.log(`El producto ${p.nombre} no puede tener ${p.cantidad} unidades. Será eliminado`);
-
+      
     return (p.precio > 0 && p.cantidad > 0);
   })
 
@@ -61,6 +138,7 @@ do {
   totalCompra = filtrado.reduce((a, b) => { 
     return a + (b.precio * b.cantidad);
   }, 0);
+  
   const totalProductos = filtrado.reduce((a, b) => {
     return (a + b.cantidad);
   }, 0);
@@ -71,7 +149,7 @@ do {
   if (totalProductos > maxProductos) {
     console.log(`Su compra tiene ${totalProductos} y supera el máximo de ${maxProductos}.\nLa compra será terminada.`);
     return;
-  } 
+  }
   
   // evalua si monto total supera umbral de descuento
   // avisa usuario y aplica descuento
@@ -117,9 +195,10 @@ function yOrN(x) {
 function getRnd(max){
   // utilidad para obtener un valor aleatorio para las
   // las cantidades de productos, y
-  max = max === 1 ? 5 : 20;
+  max = (max === 1 ? 5 : 20);
   return Math.floor(Math.random() * max);
 }
+
 
 function obtenerProductos(){
   return [
