@@ -1,4 +1,5 @@
 "use strict"
+console.log = log;
 /* =====================================
 =          CARRITO DE COMPRA           =
 ===================================== */
@@ -72,9 +73,14 @@
 // 4.1 ¿Cómo evitaron errores en el uso de variables? 
 // 4.2 ¿Qué beneficios se obtuvo del uso de objetos?
 // 4.3 ¿Cómo manejaron una lógica clara y eficiente if/else? 
-// 4.4 ¿Qué condiciones de borde fueron más desafiantes? 
+// 4.4 ¿Qué condiciones de borde fueron más desafiantes?
 
-console.log('Comenzando rutina del carrito de compra');
+/* =====================================
+=                CóDIGO                =
+===================================== */
+
+// log('Comenzando rutina del carrito de compra');
+// TODO msg.salute(nombreCliente)
 
 // para trabajar con valores hardcodeados y simular situaciones
 // vamos a trabajar con una función comprar que probará los 
@@ -106,7 +112,8 @@ do {
   const q = getRnd(1);
   carrito.push({...p, cantidad: q});
   console.log(`Se ha(n) agregado ${q} ${p.nombre}`)
-  
+  // TODO msg.productAdd(q, p.nombre)
+
   // quitar o no el producto
   // if (yOrN()) quitarProducto();
   yOrN() ? quitarProducto() : 0;
@@ -115,12 +122,14 @@ do {
 } while (terminarCompra())
 
   console.log("El carrito de compra es...");
+  // TODO msg.showOriginalCart(carrito);
   console.table(carrito);
   // Parte 2 evaluando condiciones
   // evalua si carrito vacio
   // se avisa al usuario y termina la ejecución
   if (carrito.length === 0) {
     console.log('El carrito está vacío. La compra ha terminado.');
+    // TODO msg.warnEmptyCart();
     return;
   }
   // evalua si a) precio negativo b) cantidad 0
@@ -128,8 +137,10 @@ do {
   const filtrado = carrito.filter(p => {
     if (p.precio < 1)
       console.log(`El producto ${p.nombre} tiene precio ${p.precio}. Será eliminado`);
-    if (p.cantidad === 0)
-      console.log(`El producto ${p.nombre} no puede tener ${p.cantidad} unidades. Será eliminado`);
+      // TODO msg.warnRemoveProdNegPrice(p.nombre, p.precio)   
+      if (p.cantidad === 0)
+        console.log(`El producto ${p.nombre} no puede tener ${p.cantidad} unidades. Será eliminado`);
+      // TODO msg.warnRemoveProdZeroQty(p.nombre, p.cantidad)   
       
     return (p.precio > 0 && p.cantidad > 0);
   })
@@ -148,6 +159,7 @@ do {
   // avisa usuario y termina ejecución
   if (totalProductos > maxProductos) {
     console.log(`Su compra tiene ${totalProductos} y supera el máximo de ${maxProductos}.\nLa compra será terminada.`);
+    // TODO msg.warnQtyOverflow(totalProductos, maxProductos);
     return;
   }
   
@@ -156,10 +168,12 @@ do {
   let totalDescuento = 0;
   if (totalCompra > minMonto) {
     console.log(`Su compra es elegible para obtener un descuento del ${descuento}%.`);
+    // TODO msg.infoDiscount(totalDescuento)
     totalDescuento = (totalCompra * (descuento/100));
   }
   // presenta total real carro y total precio
   console.log(`Subtotal: \t\t$${totalCompra}\nDescuento: \t\t$${totalDescuento.toFixed(0)}\nTotal a pagar: \t$${(totalCompra - totalDescuento).toFixed(0)}`)
+  // TODO msg.showTotals(totalCompra, totalDescuento);
   console.log("******************************************************************")
 };
 
@@ -223,4 +237,19 @@ function obtenerProductos(){
   { nombre: "Plátanos (kg)", precio: 1200 },
   { nombre: "Tomates (kg)", precio: -1600 }
 ];
+}
+
+function messages() {
+  return {
+    salute: (name) => console.log(`Bienvenido ${name}`),
+    productAdd: (q, p) => console.log(`Bienvenido ${name}`),
+    showOriginalCart: (cart) => console.table(cart),
+    showCleansedCart: (cleansedCart) => console.table(cleansedCart),
+    warnEmptyCart: ( ) => console.log(`El carrito está vacío. La compra será finalizada`),
+    warnRemoveProdNegPrice: (name, price) => console.log(`El producto ${name} tiene precio ${price}. Será eliminado`),
+    warnRemoveProdZeroQty: (name, qty) => console.log(`El producto ${name} no puede tener ${qty} unidades. Será eliminado`),
+    warnQtyOverflow: (qty, max) => console.log(`Su compra tiene ${qty} y supera el máximo de ${max}.\nLa compra será terminada.`),
+    infoDiscount: (discount) => console.log(`Su compra es elegible para obtener un descuento del ${discount}%.`),
+    showTotals: (total, discount) =>   console.log(`Subtotal: \t\t$${totalCompra}\nDescuento: \t\t$${total.toFixed(0)}\nTotal a pagar: \t$${(total - discount).toFixed(0)}`),
+  }
 }
