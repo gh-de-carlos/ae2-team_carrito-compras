@@ -244,8 +244,7 @@ function getRnd(val = 0) {
  */
 function terminarCompra() {
   if (yOrN()) {
-    console.log("Ha finalizado de agregar productos.");
-    // TODO msg.cartFinished();
+    msg.cartFinished();
     return false;
   }
 
@@ -263,8 +262,7 @@ function terminarCompra() {
 function quitarProducto() {
   if (yOrN()) {
     const p = carrito.pop();
-    console.log(`Se ha quitado el producto ${p.nombre}`)
-    // TODO msg.popLastProd();
+    msg.popLastProd(p.nombre);
   }
 }
 
@@ -331,6 +329,7 @@ function messageBuilder({
 
   const segments = {
     add: ' Se han agregado ',
+    addp: ' de agregar productos. ',
     bye: 'Adios ',
     cart: ' Su carrito ',
     disc: ' El descuento aplicado es: ',
@@ -338,11 +337,13 @@ function messageBuilder({
     emty: ' no puede estar vacío. ',
     end: ' Su compra será terminada. ',
     foff: 'No vuelvas nunca más. ',
+    fshd: ' Ha terminado ',
     hi: 'Bienvenido ',
     neg: ' no puede tener precio negativo, ',
     ovflw: ' no puede tener más de ' + cartMaxProd + ' ',
     prds: ' productos. ',
     prod: ' El producto ',
+    popp: ' Se ha quitado ',
     rate: ' es elegible para obtener un descuento del ',
     subt: 'Subtotal:',
     rmv: ' y será eliminado. ',
@@ -364,13 +365,16 @@ function messageBuilder({
   const {
     hi, bye, joy, dot, cart, col, emty, end, rmv, zero, foff, qty, tab, subt,
     pct, rate, ovflw, prod, prds, neg, disc, add, br, dsct, tot, unit, _$,
+    addp, fshd, popp
   } = segments;
 
   const say = (...segments) => log(segments.join("").trim().replace("  ", " "));
 
   return {
+    cartFinished: () => say(fshd, addp),
     infoDiscount: (discRate) => say(cart, rate, discRate, pct),
     infoProductAdd: (name, q) => say(add, q, qty, name),
+    popLastProd: (nameP) => say(popp, nameP, dot),
     sayHi: (name) => say(hi, name, joy),
     sayBye: (name) => say(bye, name, dot, foff),
     showCart: (carrito) => { say(cart, col); table(carrito) },
