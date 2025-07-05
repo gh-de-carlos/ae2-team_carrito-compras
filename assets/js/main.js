@@ -31,14 +31,14 @@
 // - Usar if para modificar el control de flujo del programa
 // - Manipular tipos simples y complejos según se requiera
 // - Controlar el scope de las variables usando funciones(1)
-// - Usar operaradores ariméticos aplicando precedencia.
+// - Usar operadores ariméticos aplicando precedencia.
 
 /* =====================================
 =            REQUERIMIENTOS            =
 ===================================== */
 // DECLARE VARIABLES PARA 
 // 1. ✅ Nombre del cliente
-// 2. Un carrito de productos (arreglo de objetos)
+// 2. ✅ Un carrito de productos (arreglo de objetos)
 // 2.1 Cada objeto debe tener nombre/cantidad/precio
 // 3. ✅ Total de la compra
 // 4. ✅ Descuento aplicado
@@ -48,12 +48,12 @@
 // 2. ✅ const para máximo de productos en carrito (10)
 // 3. ✅ const para la tasa de descuento (10)
 // 4. ✅ const para subtotal
-// 5. const para cant. máx. a agregar de un prod. por vez (4)
+// 5. ✅ const para cant. máx. a agregar de un prod. por vez (4)
 
 // USO DE IF [ELSE] PARA
-// 2. Controle caso borde: carrito está vacío
-// 3. Controle caso borde: monto supera límite (descuento)
-// 4. Controle caso borde: precios < 1 o cantidad inválida
+// 2. ✅ Controle caso borde: carrito está vacío
+// 3. ✅ Controle caso borde: monto supera límite (descuento)
+// 4. ✅ Controle caso borde: precios < 1 o cantidad inválida
 
 // MENSAJES AL USUARIO
 // 0. Saludar al usuario
@@ -101,7 +101,7 @@ console.log(`Bienvenido ${customer}`);
 
 // Esta función es una función de efecto secundario que 
 // realiza la simulación del proceso de compra así como 
-// solicita la pauta del ejercicio. Se agregan un artículo a
+// solicita la pauta del ejercicio. Se agrega un artículo a
 // la vez, se decide si quitarlo o no, y se decide terminar
 // la compra, todo en base a valores aleatorios para poder
 // ejecutar la función repetidamente y obtener siempre un
@@ -133,25 +133,26 @@ function comprar() {
     console.log(`Se ha(n) agregado ${q} ${p.nombre}`)
     // TODO msg.productAdd(q, p.nombre)
 
+    // como debemos simular el comportamiento de un comprador
     // decidimos a la suerte si quitar o no el producto
     if (yOrN()) quitarProducto();
-    // yOrN() ? quitarProducto() : 0;
 
-    // definimos si terminar de comprar o no. Finaliza el loop
-    // en base al retorno de la función yOrN() (Si o NO)
+    // decidimos si dejar de agregar productos o agregar otro
   } while (terminarCompra())
 
-  // informamos al usuario cuál es su carrito inicial
-  // según la pauta, puede contener condiciones borde como:
+  // el comprador ha terminado de agregar productos al carrito
+  // por lo que ahora le informamos cuál es su carrito inicial
+  // según la pauta, este puede contener condiciones borde como:
   // estar vacío => finalizar compra
   // tener productos con precio negativo => quitar producto
-  // tener productos con cantidad 0 => quitar productos
+  // tener productos con cantidad 0 => quitar producto
+  // por lo que ahora debemos evaluar esas condiciones para
+  // limpiar el carrito o terminar la compra según el caso
   console.log("El carrito de compra es...");
   // TODO msg.showOriginalCart(carrito);
   console.table(carrito);
-  // por lo que ahora debemos evaluar esas condiciones para
-  // limpiar el carrito o terminar la compra según el caso
-  // ¿El carrito está vacío? avisa al usuario y termina compra
+
+  // ¿El carrito está vacío? avisa al usuario y termina la compra
   if (carrito.length === 0) {
     console.log('El carrito está vacío. La compra ha terminado.');
     // TODO msg.warnEmptyCart();
@@ -182,7 +183,7 @@ function comprar() {
   totalProducts = filtrado.reduce((a, b) => {
     return (a + b.cantidad);
   }, 0);
-  
+
   // Ahora, evaluamos si la cantidad de productos supera el
   // máximo, tal como sugiere la pauta. Como la pauta no dice`
   // qué hacer cuando sucede esta condición, se ha decidido
@@ -224,46 +225,70 @@ function getCustomerName() {
  * Esta función retorna un entero elegido de forma aleatoria
  * El parámetro val recibe el valor máximo + 1 que puede
  * retornar la función. Los rangos actuales están definidos
- * según la función que la invoca y actualmente son:
+ * según la función que la invoca o utiliza y actualmente son:
  * getCustomerName() -> el largo del arreglo customers (5)
- * p -> el largo del arreglo catalog (20)
+ * p = catalog[] -> pasa el largo del arreglo catalog (20)
+ * q -> pasa maxQtyPerProd (4);
  * TODO continuar acá con valores
- * @param {string} type - El tipo de uso que invoca la f(x) 
  * @param {number} val - El techo del rango [0:val] solicitado. Default 0.
  * @returns {number} un entero dentro del rango [0:val]
  */
 function getRnd(val = 0) {
-  // utilidad para obtener un valor aleatorio para las
-  // las cantidades de productos, y
-  max = (max === 1 ? 5 : 20);
-  return Math.floor(Math.random() * max);
+  return Math.floor(Math.random() * val);
 }
+
+/**
+ * Esta función determina si la función comprar() terminará el proceso
+ * de agregar productos o continuará con uno más. Utiliza a su vez la
+ * función yOrN() para "tirar una moneda" y enviar un mensaje de usuario
+ * @returns {boolean} que es utilizado para dejar de agregar productos
+ */
 function terminarCompra() {
-  if (yOrN(1)) {
+  if (yOrN()) {
     console.log("Ha finalizado de agregar productos.");
+    // TODO msg.cartFinished();
     return false;
   }
-
+  
   return true;
 }
 
-
+/**
+ * Esta función, de manera similar a la anterior, "tira una moneda"
+ * haciendo uso de yOrN() para decidir si quitar el último producto
+ * agregado o no simulando a un comprador indeciso. Es una función
+ * de efecto secundario sin retorno, sólo muestra un mensaje al usuario
+ * y elimina el último producto agregado usando Array.pop()
+ * @returns {undefined} sin retorno explícito
+*/
 function quitarProducto() {
   if (yOrN()) {
     const p = carrito.pop();
     console.log(`Se ha quitado el producto ${p.nombre}`)
+    // TODO msg.popLastProd();
   }
 }
 
-function yOrN(x) {
-  // obtiene un valor 0 o 1 para decidir si terminar la 
-  // compra o no, y también para quitar o no el último producto
-  const q = Math.round(Math.random() * 2)
-  // retorna el valor booleano de q (0 = false, 1 = true)
-  // console.log(`yorn es ${q} === ${!!q}`)
+/**
+ * Esta función hace uso de la cualidad de ser truthy o falsy
+ * de los valores en Javascript para lanzar una moneda con 
+ * posibilidades calibradas. En este caso se estable la
+ * posibilidad de que el valor generado sea 0, 1 ó 2 a través
+ * del valor default de su parámetro, pero puede ser pasado
+ * para probar diferentes comportamientos. Luego la decisión
+ * se produce al forzar el número generado a un valor booleano.
+ * Por las reglas de truthiness de JS, 1 y 2 retornarán un true,
+ * mientras que 0 retornará un false. En el retorno, este valor
+ * es negado con ! para otorgar más posibilidades de seguir
+ * comprando y mantener el producto en el carro que 
+ * de terminar / eliminarlo.
+ * @param {number} x - un valor que cambia el ratio win/lose 
+ * @returns {boolean} q 
+ */
+function yOrN(x = 2) {
+  const q = Math.round(Math.random() * x)
   return !q;
 }
-
 
 /**
  * Esta función es una utilidad que retorna un arreglo de 
