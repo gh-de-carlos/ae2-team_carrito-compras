@@ -118,6 +118,8 @@ let discount = 0;                       // el descuento a aplicar
  * @returns {undefined} Sin retorno explícito.
 */
 function comprar() {
+  // se limpia la consola al comenzar la compra
+  console.clear();
   // el carrito se debe limpiar luego de cada compra
   carrito.length = 0;
   // el descuento aplicado también se debe limpiar
@@ -156,12 +158,6 @@ function comprar() {
   // console.log("El carrito de compra es...");
   msg.showCart(carrito);
 
-  // ¿El carrito está vacío? avisa al usuario y termina la compra
-  if (carrito.length === 0) {
-    // console.log('El carrito está vacío. La compra ha terminado.');
-    msg.warnEmptyCart();
-    return;
-  }
   // ¿El carrito tiene productos con precio negativo o con 
   // cantidad = 0? Avisamos de ello y quitamos el producto
   // esta función retorna el carrito sanitizado para poder
@@ -171,9 +167,16 @@ function comprar() {
       msg.warnRemoveProdNegPrice(p.nombre);
     if (p.cantidad === 0)
       msg.warnRemoveProdZeroQty(p.nombre);
-
+    
     return (p.precio > 0 && p.cantidad > 0);
   })
+  
+  // ¿El carrito está vacío? avisa al usuario y termina la compra
+  if (carrito.length === 0) {
+    // console.log('El carrito está vacío. La compra ha terminado.');
+    msg.warnEmptyCart();
+    return;
+  }
 
   // Ahora si, con un carrito corregido, usamos reduce para 
   // obtener el subtotal de la compra y la cantidad de 
@@ -218,7 +221,7 @@ function comprar() {
  * @returns {string} el nombre de un cliente
 */
 function getCustomerName() {
-  const customers = ['Carlos', 'Hernán', 'Jorge', 'Nati', 'Seba'];
+  const customers = ['Carlos', 'Hernán', 'Jorge', 'Nati', 'Seba', 'Kathy'];
   return customers[getRnd(customers.length)];
 }
 /**
@@ -319,12 +322,32 @@ function obtenerProductos() {
 }
 
 /**
- * TODO factoría en desarrollo
- * @returns {string} un mensaje de usuario
+ * Esta es una función simple que se encarga de crear y darle
+ * formato a los mensajes de usuario. Esta compuesto por un`
+ * destructuring de console.log, table, warn y error, una
+ * sección con los segmentos necesarios para armar los mensajes
+ * un método "formateador" (say) que aplica algunos procesos
+ * para convertir una serie de segmentos en un mensaje y 
+ * finalmente el objeto retornado que es una lista de métodos
+ * que arman los mensajes a partir de los segmentos y a través
+ * del uso de say() La intención es limpiar el flujo del 
+ * programa de console.los muy largos y mostrar un método cuyo
+ * nombre es bastante significativo como para entender cuál
+ * es el mensaje sin tener que leerlo.
+ * 
+ * En el programa mismo, se creó la constante msg para obtener
+ * el retorno de esta función por lo que en vez de console.log's
+ * ahora podrás ver cosas como los siguientes ejemplos: 
+ * msg.sayHi(customer) => mensaje, di hola -> usuario
+ * msg.showCart(carrito) => mensaje, muestra carro -> carrito
+ * @param {object} - configuración default de la función
+ * @returns {object} - la colección de mensajes de usuario
  */
 function messageBuilder({
   log = console.log,
   table = console.table,
+  error = console.error,
+  warn = console.warn,
   emoji = true } = {}) {
 
   const segments = {
@@ -363,9 +386,9 @@ function messageBuilder({
   }
 
   const {
-    hi, bye, joy, dot, cart, col, emty, end, rmv, zero, foff, qty, tab, subt,
-    pct, rate, ovflw, prod, prds, neg, disc, add, br, dsct, tot, unit, _$,
-    addp, fshd, popp
+    hi, bye, joy, dot, cart, col, emty, end, rmv, zero, foff,
+    qty, tab, subt, pct, rate, ovflw, prod, prds, neg, disc,
+    add, br, dsct, tot, unit, _$, addp, fshd, popp
   } = segments;
 
   const say = (...segments) => log(segments.join("").trim().replace("  ", " "));
@@ -378,7 +401,8 @@ function messageBuilder({
     sayHi: (name) => say(hi, name, joy),
     sayBye: (name) => say(bye, name, dot, foff),
     showCart: (carrito) => { say(cart, col); table(carrito) },
-    showTotals: (s, d) => say(subt, tab, _$, s, br, dsct, tab, _$, d, br, tot, tab, tab, _$, s - d),
+    showTotals: (s, d) => say(subt, tab, _$, s, br, dsct, tab, 
+                              _$, d, br, tot, tab, tab, _$, s - d),
     warnEmptyCart: () => say(cart, emty, end),
     warnRemoveProdNegPrice: (name) => say(prod, name, neg, rmv),
     warnRemoveProdZeroQty: (name) => say(prod, name, zero, rmv),
@@ -387,7 +411,8 @@ function messageBuilder({
 }
 
 
-
+// TODO para futuros desarrollos en un módulo separado??
+// TODO (si te esfuerzas un poco más, el futuro es hoy 😄)
 // const sym = emoji
 //   ? { warn: "⚠️", info: "ℹ️", cart: "🛒", end: "✅", money: "💰", greet: "👋" }
 //   : { warn: "[!]", info: "[i]", cart: "[#]", end: "[✓]", money: "[$]", greet: "[~]" };
