@@ -15,60 +15,78 @@
     <link rel="stylesheet" href="./assets/css/style.css">
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js" integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q" crossorigin="anonymous" defer></script>
-    <script src="./assets/js/main.js"></script>
-    
+    <script src="./assets/js/main.js" defer></script>
+
     <title>Carrito de compras</title>
   </head>
 
   <body>
-    <hgroup>
-      <h1>Contexto</h1>
-      <p>Un supermercado quiere implementar un sistema básico en JavaScript que registre las compras de los clientes en una terminal de autoservicio. El sistema debe almacenar información del cliente y los productos que va añadiendo al carrito, calcular el total, aplicar descuentos si se superan ciertos montos, y validar condiciones como carritos vacíos o valores inválidos. El objetivo es que el equipo diseñe la lógica utilizando variables correctamente y domine los operadores, tipos de datos y control de flujo</p>
-    </hgroup>
-    <h1>Actividad</h1>
-    <p>
-Trabajen en equipo para desarrollar una solución en JavaScript que cubra los siguientes aspectos:
+    <main>
+      <hgroup>
+        <h1>Contexto</h1>
+        <p>Un supermercado quiere implementar un sistema básico en JavaScript que registre las compras de los clientes en una terminal de autoservicio. El sistema debe almacenar información del cliente y los productos que va añadiendo al carrito, calcular el total, aplicar descuentos si se superan ciertos montos, y validar condiciones como carritos vacíos o valores inválidos. El objetivo es que el equipo diseñe la lógica utilizando variables correctamente y domine los operadores, tipos de datos y control de flujo</p>
+      </hgroup>
+      <h1>Actividad</h1>
+      <p>
+        Trabajen en equipo para desarrollar una solución en JavaScript que cubra los siguientes aspectos:
+      </p>
 
-Declaren variables para:
-  - Nombre del cliente.
-  - Lista de productos (usar un arreglo de objetos con nombre, cantidad y precio).
-  - Total de compra.
-  - Descuento aplicado (si corresponde).
+      <figure>
+        <figcaption>Declaren variables para:</figcaption>
+        <ul>
+          <li>Nombre del cliente.</li>
+          <li> Lista de productos (usar un arreglo de objetos con nombre, cantidad y precio).</li>
+          <li>Total de compra.</li>
+          <li>Descuento aplicado (si corresponde).</li>
+        </ul>
+      </figure>
 
-Apliquen nombres significativos a todas las variables del sistema.
-Utilicen constantes para definir límites como monto mínimo para aplicar descuento o máximo de productos permitidos.
-Manipulen tipos simples (string, number, boolean) y complejos (arreglos y objetos) según corresponda.
-Controlen el scope de las variables según el diseño modular del programa (funciones).
-Usen operadores aritméticos para calcular subtotales y totales.
-Consideren la precedencia de operadores al aplicar fórmulas (como descuento o impuestos).
+      <figure>
+        <figcaption>Usen operadores de comparación y lógicos para validar:</figcaption>
+        <ul>
+          <li>CASO A. Si el carrito está vacío.</li>
+          <li>CASO B. Si el monto total supera un cierto límite.</li>
+          <li>CASO C. Si algún precio o cantidad ingresada es inválida.</li>
+        </ul>
+      </figure>
+      
+      <figure>
+        <figcaption>Prueben diferentes condiciones de borde:</figcaption>
+        <ul>
+          <li>Producto con cantidad 0. CASO C</li>
+          <li>Total de compra en 0. Tanto 1 como 3 provocan este.</li>
+          <li>Lista de productos vacía. CASO A</li>
+          <li>Precio negativo. CASO C</li>
+        </ul>
+      </figure>
+      
+      <figure>
+        <figcaption>Otros:</figcaption>
+        <ul>
+          <li>Apliquen nombres significativos a todas las variables del sistema.</li>
+          <li>Utilicen constantes para definir límites como monto mínimo para aplicar descuento o máximo de productos permitidos.</li>
+          <li>Manipulen tipos simples (string, number, boolean) y complejos (arreglos y objetos) según corresponda.</li>
+          <li>Controlen el scope de las variables según el diseño modular del programa (funciones).</li>
+          <li>Usen operadores aritméticos para calcular subtotales y totales.</li>
+          <li>Consideren la precedencia de operadores al aplicar fórmulas (como descuento o impuestos).</li>
+          <li>Simulen acciones del cliente como añadir productos, quitar productos y finalizar compra.</li>
+          <li>Usen if y else para mostrar diferentes mensajes según el total (por ejemplo: “gracias por tu compra”, “tu carrito está vacío”, “aplicaste un descuento”).</li>
+          <li>Implementen un diagrama de flujo simple que explique la lógica principal del sistema y represente visualmente cómo se toman decisiones.</li>
+        </ul>
+      </figure>
 
-Usen operadores de comparación y lógicos para validar:
-  - CASO A. Si el carrito está vacío.
-  - CASO B. Si el monto total supera un cierto límite.
-  - CASO C. Si algún precio o cantidad ingresada es inválida.
-
-Se implementan porque se han sugerido en la lógica de negocio:
-  - Indicar si ha recibido descuento.
-  - Si la cantidad de productos en el carro supera máximo.
-
-Simulen acciones del cliente como añadir productos, quitar productos y finalizar compra.
-Usen if y else para mostrar diferentes mensajes según el total (por ejemplo: “gracias por tu compra”, “tu carrito está vacío”, “aplicaste un descuento”).
-Implementen un diagrama de flujo simple que explique la lógica principal del sistema y represente visualmente cómo se toman decisiones.
-
-Prueben diferentes condiciones de borde:
-  - 1.Producto con cantidad 0. CASO C
-  - 2.Total de compra en 0. Tanto 1 como 3 provocan este. 
-  - 3.Lista de productos vacía. CASO A
-  - Precio negativo. CASO C
-
-Al final, el equipo debe presentar su solución y explicar brevemente cómo resolvieron los siguientes puntos:
-
-¿Cómo evitaron errores por mal uso de variables?
-¿Qué beneficios vieron en el uso de objetos para representar productos?
-¿Cómo manejaron una lógica clara y eficiente con if/else?
-¿Qué condiciones de borde encontraron más retadoras?
-    </p>
-
+      <figure>
+        <figcaption>Al final, el equipo debe presentar su solución y explicar brevemente cómo resolvieron los siguientes puntos:</figcaption>
+        <ul>
+          <li>¿Cómo evitaron errores por mal uso de variables?</li>
+          <li>¿Qué beneficios vieron en el uso de objetos para representar productos?</li>
+          <li>¿Cómo manejaron una lógica clara y eficiente con if/else?</li>
+          <li>¿Qué condiciones de borde encontraron más retadoras?</li>
+        </ul>
+      </figure>
+      
+    </main>
+    <aside><button>Comprar</button></aside>
   </body>
 
 </html>

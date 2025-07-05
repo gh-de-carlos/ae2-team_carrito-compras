@@ -171,20 +171,21 @@ function comprar() {
     return (p.precio > 0 && p.cantidad > 0);
   })
   
-  // ¿El carrito está vacío? avisa al usuario y termina la compra
-  if (carrito.length === 0) {
-    // console.log('El carrito está vacío. La compra ha terminado.');
-    msg.warnEmptyCart();
-    return;
-  }
-
+  
   // Ahora si, con un carrito corregido, usamos reduce para 
   // obtener el subtotal de la compra y la cantidad de 
   // artículos en el carrito.
   totalPurchase = filtrado.reduce((a, b) => {
     return a + (b.precio * b.cantidad);
   }, 0);
-
+  
+  // ¿El carrito está vacío? avisa al usuario y termina la compra
+  if (carrito.length === 0) {
+    // console.log('El carrito está vacío. La compra ha terminado.');
+    msg.warnEmptyCart();
+    return;
+  }
+  
   totalProducts = filtrado.reduce((a, b) => {
     return (a + b.cantidad);
   }, 0);
@@ -211,6 +212,12 @@ function comprar() {
   // nos despedimos del usuario
   msg.sayBye(customer);
 };
+
+/* =====================================
+=            EVENTOS y DOM             =
+===================================== */
+const btn = document.querySelector('button');
+btn.addEventListener('click', comprar);
 
 /* =====================================
 =            UTILIDADES                =

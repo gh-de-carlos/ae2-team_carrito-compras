@@ -3,10 +3,85 @@
 
 :root {
   --gap: 40px;
-}
+}*/
 
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-} */
+}
+
+body {
+  height: 100vh;
+  padding: 20px;
+  
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 0.9rem;
+
+  background: #1f1e1e;
+}
+
+main {
+  padding: 20px;
+  flex: 0 0 65%;
+
+  background: #ffdccf;
+  border-radius: 8px;
+
+  /* scroll related css */
+  overflow-y: scroll;
+  .scrollable {
+  overflow-y: scroll;
+  scrollbar-width: thin;
+  scrollbar-color: #888 #f0f0f0;
+}
+
+main::-webkit-scrollbar {
+  width: 12px;
+}
+
+main::-webkit-scrollbar-track {
+  background: #f0f0f0;
+}
+
+main::-webkit-scrollbar-thumb {
+  background-color: #888;
+  border-radius: 10px;
+}
+}
+
+aside {
+  flex: 0 0 35%;
+  
+  display: grid;
+  place-content: center;
+
+  background: #cce3e1;
+  border-radius: 8px;
+}
+
+button {
+  padding: 1rem 1.5rem;
+  border: 1px solid #367439;
+  
+  font-size: 1.5rem;
+  font-weight: 700;
+
+  border-radius: 8px;
+  outline: none;
+
+  background: #ff4f0f;
+  color: #fffefc;
+  box-shadow: 4px 4px 4px #46a34a;
+
+  transition: all 100ms ease-in-out;
+}
+
+button:active {
+  transform: translate(2px, 2px);
+  box-shadow: 2px 2px #2e7d32;
+}
