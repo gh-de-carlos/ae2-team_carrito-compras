@@ -2,7 +2,7 @@
 /* =====================================
 =          CARRITO DE COMPRA           =
 ===================================== */
-
+// TODO falta informar el total de productos en el carro
 /**
  * @author GRUPO 1 (the real one)
  * Natalia Devia
@@ -85,19 +85,18 @@
 // NOTA: se han utilizado nombres semánticamente relevantes
 // pero en inglés, apuntando a un balance entre expresividad
 // y brevedad para mejorar la legibilidad del código
-const customer = getCustomerName();     // el cliente
 const catalog = obtenerProductos();     // el catálogo
 const discountRate = 10;                // tasa de descuento
 const minOrderForDiscount = 10000;      // compra mínima para descuento
 const cartMaxProd = 10;                 // máximo de productos por compra
 const maxQtyPerProd = 4;                // cantidad máx por produtos x vez
 const carrito = [];                     // nuestro carrito de compras
+const msg = messageBuilder();           // mensajes a usuario
+let customer = null;                    // el futuro cliente
 let totalPurchase = 0;                  // total compra
 let totalProducts = 0;                  // cant de productos en el carrito
 let discount = 0;                       // el descuento a aplicar
 
-// TODO msg.salute(nombreCliente)
-console.log(`Bienvenido ${customer}`);
 
 // Esta función es una función de efecto secundario que 
 // realiza la simulación del proceso de compra así como 
@@ -117,8 +116,15 @@ console.log(`Bienvenido ${customer}`);
  * Agregar productos, quita productos, termina la compra y
  * entrega mensajes al usuario-comprador. 
  * @returns {undefined} Sin retorno explícito.
- */
+*/
 function comprar() {
+  // el carrito se debe limpiar luego de cada compra
+  carrito.length = 0;
+  // el descuento aplicado también se debe limpiar
+  discount = 0;
+  // ¿Quién comprará hoy?
+  customer = getCustomerName();
+  msg.sayHi(customer);
   // A COMPRAAAAR!! 
   // hacemos un loop para agregar productos al carrito
   do {
@@ -130,14 +136,13 @@ function comprar() {
     // operator para hacer manipulación de objetos y le
     // informamos al usuario de la operación realizada.
     carrito.push({ ...p, cantidad: q });
-    console.log(`Se ha(n) agregado ${q} ${p.nombre}`)
-    // TODO msg.productAdd(q, p.nombre)
+    msg.infoProductAdd(p.nombre, q);
 
     // como debemos simular el comportamiento de un comprador
     // decidimos a la suerte si quitar o no el producto
     if (yOrN()) quitarProducto();
 
-    // decidimos si dejar de agregar productos o agregar otro
+    // decidimos si continuar agregando productos o no
   } while (terminarCompra())
 
   // el comprador ha terminado de agregar productos al carrito
@@ -148,14 +153,13 @@ function comprar() {
   // tener productos con cantidad 0 => quitar producto
   // por lo que ahora debemos evaluar esas condiciones para
   // limpiar el carrito o terminar la compra según el caso
-  console.log("El carrito de compra es...");
-  // TODO msg.showOriginalCart(carrito);
-  console.table(carrito);
+  // console.log("El carrito de compra es...");
+  msg.showCart(carrito);
 
   // ¿El carrito está vacío? avisa al usuario y termina la compra
   if (carrito.length === 0) {
-    console.log('El carrito está vacío. La compra ha terminado.');
-    // TODO msg.warnEmptyCart();
+    // console.log('El carrito está vacío. La compra ha terminado.');
+    msg.warnEmptyCart();
     return;
   }
   // ¿El carrito tiene productos con precio negativo o con 
@@ -164,11 +168,9 @@ function comprar() {
   // continuar con el cálculo de totales y descuento.
   const filtrado = carrito.filter(p => {
     if (p.precio < 1)
-      console.log(`El producto ${p.nombre} tiene precio ${p.precio}. Será eliminado`);
-    // TODO msg.warnRemoveProdNegPrice(p.nombre, p.precio)   
+      msg.warnRemoveProdNegPrice(p.nombre);
     if (p.cantidad === 0)
-      console.log(`El producto ${p.nombre} no puede tener ${p.cantidad} unidades. Será eliminado`);
-    // TODO msg.warnRemoveProdZeroQty(p.nombre, p.cantidad)   
+      msg.warnRemoveProdZeroQty(p.nombre);
 
     return (p.precio > 0 && p.cantidad > 0);
   })
@@ -190,23 +192,21 @@ function comprar() {
   // terminar la compra. Otra opción es eliminar productos,
   // pero se ha elegido "cortar por lo sano". Avisa al usuario
   if (totalProducts > cartMaxProd) {
-    console.log(`Su compra tiene ${totalProducts} y supera el máximo de ${cartMaxProd}.\nLa compra será terminada.`);
-    // TODO msg.warnQtyOverflow(totalProductos, maxProductos);
+    msg.warnQtyOverflow();
     return;
   }
 
   // Evaluamos si el monto de la compra supera el umbral de
   // descuento, avisa usuario y aplica descuento
   if (totalPurchase > minOrderForDiscount) {
-    console.log(`Su compra es elegible para obtener un descuento del ${discountRate}%.`);
-    // TODO msg.infoDiscount(totalDescuento)
-    discount = (totalPurchase * (discountRate / 100));
+    discount = Math.round((totalPurchase * (discountRate / 100)));
+    msg.infoDiscount(discountRate);
   }
   // Finalmente, presentamos el carrito de compra filtrado
   // cant. productos, subtotal, descuento aplicado y total
-  console.log(`Subtotal: \t\t$${totalPurchase}\nDescuento: \t\t$${discount.toFixed(0)}\nTotal a pagar: \t$${(totalPurchase - discount).toFixed(0)}`)
-  // TODO msg.showTotals(totalCompra, totalDescuento);
-  console.log(`Adios ${customer}, no vuelva nunca más.`);
+  msg.showTotals(totalPurchase, discount);
+  // nos despedimos del usuario
+  msg.sayBye(customer);
 };
 
 /* =====================================
@@ -219,19 +219,18 @@ function comprar() {
 */
 function getCustomerName() {
   const customers = ['Carlos', 'Hernán', 'Jorge', 'Nati', 'Seba'];
-  return customers[getRnd('C')];
+  return customers[getRnd(customers.length)];
 }
 /**
  * Esta función retorna un entero elegido de forma aleatoria
  * El parámetro val recibe el valor máximo + 1 que puede
  * retornar la función. Los rangos actuales están definidos
- * según la función que la invoca o utiliza y actualmente son:
+ * según la función que la invoca o utiliza y son:
  * getCustomerName() -> el largo del arreglo customers (5)
  * p = catalog[] -> pasa el largo del arreglo catalog (20)
  * q -> pasa maxQtyPerProd (4);
- * TODO continuar acá con valores
  * @param {number} val - El techo del rango [0:val] solicitado. Default 0.
- * @returns {number} un entero dentro del rango [0:val]
+ * @returns {number} un entero dentro del rango [0:val-1]
  */
 function getRnd(val = 0) {
   return Math.floor(Math.random() * val);
@@ -249,7 +248,7 @@ function terminarCompra() {
     // TODO msg.cartFinished();
     return false;
   }
-  
+
   return true;
 }
 
@@ -325,17 +324,66 @@ function obtenerProductos() {
  * TODO factoría en desarrollo
  * @returns {string} un mensaje de usuario
  */
-function messages() {
+function messageBuilder({
+  log = console.log,
+  table = console.table,
+  emoji = true } = {}) {
+
+  const segments = {
+    add: ' Se han agregado ',
+    bye: 'Adios ',
+    cart: ' Su carrito ',
+    disc: ' El descuento aplicado es: ',
+    dsct: 'Descuento:',
+    emty: ' no puede estar vacío. ',
+    end: ' Su compra será terminada. ',
+    foff: 'No vuelvas nunca más. ',
+    hi: 'Bienvenido ',
+    neg: ' no puede tener precio negativo, ',
+    ovflw: ' no puede tener más de ' + cartMaxProd + ' ',
+    prds: ' productos. ',
+    prod: ' El producto ',
+    rate: ' es elegible para obtener un descuento del ',
+    subt: 'Subtotal:',
+    rmv: ' y será eliminado. ',
+    unit: ' unidad/es. ',
+    zero: ' no puede tener 0 unidades, ',
+    br: '\n',
+    col: ': ',
+    dot: '. ',
+    joy: '!! ',
+    pct: '% ',
+    pLf: '(',
+    pRt: ')',
+    qty: 'x ',
+    tab: '\t',
+    tot: 'Total: ',
+    _$: '$'
+  }
+
+  const {
+    hi, bye, joy, dot, cart, col, emty, end, rmv, zero, foff, qty, tab, subt,
+    pct, rate, ovflw, prod, prds, neg, disc, add, br, dsct, tot, unit, _$,
+  } = segments;
+
+  const say = (...segments) => log(segments.join("").trim().replace("  ", " "));
+
   return {
-    salute: (name) => console.log(`Bienvenido ${name}`),
-    productAdd: (q, p) => console.log(`Bienvenido ${name}`),
-    showOriginalCart: (cart) => console.table(cart),
-    showCleansedCart: (cleansedCart) => console.table(cleansedCart),
-    warnEmptyCart: () => console.log(`El carrito está vacío. La compra será finalizada`),
-    warnRemoveProdNegPrice: (name, price) => console.log(`El producto ${name} tiene precio ${price}. Será eliminado`),
-    warnRemoveProdZeroQty: (name, qty) => console.log(`El producto ${name} no puede tener ${qty} unidades. Será eliminado`),
-    warnQtyOverflow: (qty, max) => console.log(`Su compra tiene ${qty} y supera el máximo de ${max}.\nLa compra será terminada.`),
-    infoDiscount: (discount) => console.log(`Su compra es elegible para obtener un descuento del ${discount}%.`),
-    showTotals: (total, discount) => console.log(`Subtotal: \t\t$${totalPurchase}\nDescuento: \t\t$${total.toFixed(0)}\nTotal a pagar: \t$${(total - discount).toFixed(0)}`),
+    infoDiscount: (discRate) => say(cart, rate, discRate, pct),
+    infoProductAdd: (name, q) => say(add, q, qty, name),
+    sayHi: (name) => say(hi, name, joy),
+    sayBye: (name) => say(bye, name, dot, foff),
+    showCart: (carrito) => { say(cart, col); table(carrito) },
+    showTotals: (s, d) => say(subt, tab, _$, s, br, dsct, tab, _$, d, br, tot, tab, tab, _$, s - d),
+    warnEmptyCart: () => say(cart, emty, end),
+    warnRemoveProdNegPrice: (name) => say(prod, name, neg, rmv),
+    warnRemoveProdZeroQty: (name) => say(prod, name, zero, rmv),
+    warnQtyOverflow: () => say(cart, ovflw, unit, end),
   }
 }
+
+
+
+// const sym = emoji
+//   ? { warn: "⚠️", info: "ℹ️", cart: "🛒", end: "✅", money: "💰", greet: "👋" }
+//   : { warn: "[!]", info: "[i]", cart: "[#]", end: "[✓]", money: "[$]", greet: "[~]" };
