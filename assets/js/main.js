@@ -208,9 +208,10 @@ function comprar() {
   // Finalmente, presentamos el carrito de compra filtrado
   // cant. productos, subtotal, descuento aplicado y total
   msg.showTotals(totalPurchase, discount);
-  // nos despedimos del usuario
-  msg.sayBye(customer);
 };
+
+// nos despedimos del usuario
+msg.sayBye(customer);
 
 /* =====================================
 =            EVENTOS y DOM             =
