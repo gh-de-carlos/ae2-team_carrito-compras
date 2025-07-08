@@ -15,20 +15,24 @@ En este ejercicio individual, se debe ...
 
 ## 👉 REQUISITOS
 
+### TODO copiar requerimientos acá.
 1. blah...✅ ❓
 
-## 📃 INSTRUCCIONES
+## 📃 OTROS REQUISITOS:
+ 
+1. ✅ Implemente diagrama de flujo simple ilustrando la lógica del programa y represente la toma de decisiones.
 
-1. ✅ Crea ....
-// 3. Implemente diagrama de flujo simple ilustrando la
-//>> lógica del programa y represente la toma de decisiones.
-// 4. Presentar solución y explicar los siguientes puntos:
-// 4.1 ¿Cómo evitaron errores en el uso de variables? 
-// 4.2 ¿Qué beneficios se obtuvo del uso de objetos?
-// 4.3 ¿Cómo manejaron una lógica clara y eficiente if/else? 
-// 4.4 ¿Qué condiciones de borde fueron más desafiantes?
+Abajo se observa un screenshot del diagrama que puedes revisar completo [**acá**](https://drive.google.com/file/d/1X4VOjS_AQ536Sqd5A2d0BKhNoRwlmu2b/view).
 
-## REFLEXIÓN
+![Captura del diagrama][1]
+
+2. ✅ Presentar solución y explicar los siguientes puntos:
+    1. ¿Cómo evitaron errores en el uso de variables? 
+    1. ¿Qué beneficios se obtuvo del uso de objetos?
+    1. ¿Cómo manejaron una lógica clara y eficiente if/else? 
+    1. ¿Qué condiciones de borde fueron más desafiantes?
+
+## 🤔 REFLEXIÓN
 
 ### ¿Cómo evitaron errores en el uso de variables? 
 
@@ -90,44 +94,35 @@ Ninguna. Todas son evaluaciones directas de un solo valor,
 sin evaluaciones booleanas compuestas.
 
 
-## 📁 ESTRUCTURA DEL PROYECTO
+## 📁 ESTRUCTURA GENERAL DEL PROYECTO
 
 ```
-📁 esta-carpeta/  
+📁 m3.2.t-carrito/  
+├── README.md  
 ├── index.html  
 ├── favicon.png  
-├── README.md  
+├── .gitignore  
 └── 📁assets/  
     ├── 📁css/  
-    │   └── style.css  
     ├── 📁img/  
     ├── 📁js/  
-    │   └── main.js
     └── 📁utils/  
-        ├── mockuppng
-        └── blablah
 ```
 
 ## 👀 NOTAS
 
-- Joe Pino...
+- Se ha implementado una pequeña función que emite mensajes al usuario para liberar la vista del programa de `console.log`'s muy largos. Los mensajes tienen nombres que indican claramente cuál es el tipo de mensaje que se le dará al usuario en cada momento del flujo del programa y está completamente documentada en el código mismo.
+- Se han utilizado comentarios en modo _verbose_ para apoyarnos como equipo y que los que no trabajaron tanto en una parte puedan aprender de lo que hicieron los demás.
 
 ## 📖 DOCUMENTACIÓN CONSULTADA
-* [][2]
-* [][3]
-* [][4]
-* [][5]
+* No aplica en esta ocasión.
 
 ## 🧰 UTILIDADES
 
-* [][6]
+* Nada por acá.
 
 <!-- Enlaces referenciados arriba -->
 [0]:./assets/utils/mockup.png
-[1]:
-[2]:
-[3]:
-[4]:
-[5]:
-[6]:
+[1]:./assets/utils/screenshot-diagram.png
+<!-- [2]: -->
 
